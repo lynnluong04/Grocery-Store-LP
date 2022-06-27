@@ -1,6 +1,9 @@
 import produceData from '../mockData/produce.json';
 
 const POPULATE = 'produce/POPULATE';
+const TOGGLE_LIKE = 'produce/TOGGLE_LIKE';
+
+/* ----- ACTIONS ------ */
 
 export const populateProduce = () => {
   return {
@@ -9,6 +12,18 @@ export const populateProduce = () => {
   };
 };
 
+export const toggleLike = (produceId) => {
+  return {
+    type: TOGGLE_LIKE,
+    produceId
+  };
+};
+
+/* ------ SELECTORS ------ */
+
+export const getAllProduce = (state) => Object.values(state.produce);
+
+/* ------ REDUCER ------ */
 export default function produceReducer(state = {}, action) {
   switch (action.type) {
     case POPULATE:
@@ -17,6 +32,14 @@ export default function produceReducer(state = {}, action) {
         newState[produce.id] = produce;
       });
       return newState;
+    case TOGGLE_LIKE:
+      return {
+        ...state,
+        [action.produceId]: {
+          ...state[action.produceId],
+          liked: !state[action.produceId].liked,
+        },
+      };
     default:
       return state;
   }

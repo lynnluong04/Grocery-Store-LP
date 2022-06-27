@@ -8,7 +8,6 @@ import {Provider} from "react-redux"
 import { populateProduce } from './store/produce';
 
 
-
 const store = configureStore();
 
 if (process.env.NODE_ENV !== "production") {

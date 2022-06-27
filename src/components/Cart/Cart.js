@@ -1,17 +1,12 @@
+
+import { useSelector, useDispatch } from 'react-redux';
+import { getAllCartItems, reset } from '../../store/cart';
 import CartItem from './CartItem';
 import './Cart.css';
 
 function Cart() {
-  const cart = {};
-  const produce = {};
-
-  const cartItems = Object.values(cart)
-    .map(item => {
-      return {
-        ...item,
-        ...produce[item.id]
-      };
-    });
+  const dispatch = useDispatch();
+  const cartItems = useSelector(getAllCartItems);
 
   if (!cartItems || !cartItems.length) return (
     <div className="cart">
@@ -25,6 +20,7 @@ function Cart() {
       "Purchased the following:\n" +
       `${cartItems.map(item => `${item.count} of ${item.name}`).join('\n')}`
     );
+    dispatch(reset());
   }
 
   return (
